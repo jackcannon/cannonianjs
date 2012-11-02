@@ -1,0 +1,903 @@
+
+<html>
+  <head>
+    <title>Cannonian Time</title>
+    <link id="faviconDraw" href="" rel="icon" type="image/x-icon" />
+    <script src="http://cloud.github.com/downloads/processing-js/processing-js/processing-1.4.1.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+        CCCCCCCCCCCCC   SSSSSSSSSSSSSSS    SSSSSSSSSSSSSSS 
+     CCC::::::::::::C SS:::::::::::::::S SS:::::::::::::::S
+   CC:::::::::::::::CS:::::SSSSSS::::::SS:::::SSSSSS::::::S
+  C:::::CCCCCCCC::::CS:::::S     SSSSSSSS:::::S     SSSSSSS
+ C:::::C       CCCCCCS:::::S            S:::::S            
+C:::::C              S:::::S            S:::::S            
+C:::::C               S::::SSSS          S::::SSSS         
+C:::::C                SS::::::SSSSS      SS::::::SSSSS    
+C:::::C                  SSS::::::::SS      SSS::::::::SS  
+C:::::C                     SSSSSS::::S        SSSSSS::::S 
+C:::::C                          S:::::S            S:::::S
+ C:::::C       CCCCCC            S:::::S            S:::::S
+  C:::::CCCCCCCC::::CSSSSSSS     S:::::SSSSSSSS     S:::::S
+   CC:::::::::::::::CS::::::SSSSSS:::::SS::::::SSSSSS:::::S
+     CCC::::::::::::CS:::::::::::::::SS S:::::::::::::::SS 
+        CCCCCCCCCCCCC SSSSSSSSSSSSSSS    SSSSSSSSSSSSSSS  
+-->
+
+    <style type="text/css">
+      html {
+        margin:0;
+        padding:0;
+    		text-align:center;
+			  background-color: #000000;
+
+        background: #45484d; /* Old browsers */
+        background: -moz-radial-gradient(center, ellipse cover,  #45484d 0%, #000000 100%); /* FF3.6+ */
+        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#45484d), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+        background: -webkit-radial-gradient(center, ellipse cover,  #45484d 0%,#000000 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-radial-gradient(center, ellipse cover,  #45484d 0%,#000000 100%); /* Opera 12+ */
+        background: -ms-radial-gradient(center, ellipse cover,  #45484d 0%,#000000 100%); /* IE10+ */
+        background: radial-gradient(ellipse at center,  #45484d 0%,#000000 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+        background-attachment: fixed;
+      }
+          
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      
+        #buttons {
+          width: 179px;
+          text-align: left;
+          float: left;
+          position: absolute;
+          z-index: 2;
+        }
+
+      #debugdisplay {
+        text-align: right;
+        width: 50%;
+        color: #FFFFFF;
+        font-family: monospace;
+        float: right;
+      }
+      
+        #debugdisplay table {
+          text-align: right;
+          width: 100%;
+        }
+        
+          #debugdisplay td {
+            color: #FFFFFF;
+            font-family: monospace;
+            font-size: 10px;
+          }
+
+          .filler {
+            width: 100%;
+          }
+
+            #deb1, #deb2, #deb3, #deb4, #deb5, #deb6 {
+              padding-left: 12px;
+            }
+
+
+      #wrapper {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        height: 310px;
+        margin-top: -155px;
+        text-align: center;
+        z-index: 1;
+  		}
+
+        #digital {
+          margin: 0 auto;
+          display: table;
+          text-align: center;
+        }
+
+          .cell {
+            display: table-cell;
+            width: 250px;
+            position: relative;
+            height: 100px;
+            text-align: center;
+            vertical-align: middle;
+            font-family: Garamond;
+            color: #FFFFFF;
+          }
+
+          .title {
+            font-size: 30px;
+          }
+
+          .display {
+            font-size: 50px;
+          }
+
+        #analog {
+
+        }
+
+          #faviconCanvas {
+            margin: 0;
+            padding: 0;
+            display: none;
+          }
+
+
+        #convert {
+          height: 200px;
+          vertical-align: middle;
+        }
+
+          #conversionTable {
+            margin: 0 auto;
+          }
+
+            .convText {
+              text-align: center;
+              font-size: 30px;
+            }
+
+            .dispText {
+              background-color: #2A2A2A;
+              border: 2px solid #5A5A5A;
+              text-align: center;
+              font-size: 30px;
+              color: #BBBBBB;
+            }
+
+            .colons {
+              font-size: 30px;
+              color: #FFFFFF;
+              font-family: Garamond;
+            }
+
+            .conversionLabel {
+              text-align: center;
+              font-size: 15px;
+              color: #FFFFFF;
+            }
+
+        #why {
+          width: 80%;
+          margin: 0 auto;
+          max-width: 1000px;
+          height: auto;
+          color: #FFFFFF;
+        }
+
+        #settings {
+          width: auto;
+          margin: 0 auto;
+        }
+
+          #settingsTable {
+            margin:0 auto;
+            height:200px;
+            border-spacing: 0;
+          }
+
+          #settings td {
+            text-align: center;
+            vertical-align: top;
+            width:50%;
+            min-width: 250px;
+          }
+
+          #settings td:nth-child(odd) {
+            border-right: 1px solid #666666;
+          }
+
+          #settings td:nth-child(even) {
+            border-left: 1px solid #666666;
+          }
+
+
+
+
+      h1, h2, h3, h4, h5 {
+        margin: 0;
+        padding: 0;
+        font-family: Garamond;
+        color: #FFFFFF;
+      }
+
+        h1 {
+          font-size: 60px;
+        }
+
+        h2 {
+          margin-top: 10px;
+          margin-bottom: 5px;
+        }
+
+      input, select, option {
+        background-color: #333333;
+        border: 2px solid #666666;
+        color: #FFFFFF;
+        width: 75px;
+      }
+
+        select {
+          width: 100px;
+        }
+
+        label {
+          color: #FFFFFF;
+        }
+  	</style>
+  </head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+                                                 dddddddd                        
+BBBBBBBBBBBBBBBBB                                d::::::d                        
+B::::::::::::::::B                               d::::::d                        
+B::::::BBBBBB:::::B                              d::::::d                        
+BB:::::B     B:::::B                             d:::::d                         
+  B::::B     B:::::B   ooooooooooo       ddddddddd:::::dyyyyyyy           yyyyyyy
+  B::::B     B:::::B oo:::::::::::oo   dd::::::::::::::d y:::::y         y:::::y 
+  B::::BBBBBB:::::B o:::::::::::::::o d::::::::::::::::d  y:::::y       y:::::y  
+  B:::::::::::::BB  o:::::ooooo:::::od:::::::ddddd:::::d   y:::::y     y:::::y   
+  B::::BBBBBB:::::B o::::o     o::::od::::::d    d:::::d    y:::::y   y:::::y    
+  B::::B     B:::::Bo::::o     o::::od:::::d     d:::::d     y:::::y y:::::y     
+  B::::B     B:::::Bo::::o     o::::od:::::d     d:::::d      y:::::y:::::y      
+  B::::B     B:::::Bo::::o     o::::od:::::d     d:::::d       y:::::::::y       
+BB:::::BBBBBB::::::Bo:::::ooooo:::::od::::::ddddd::::::dd       y:::::::y        
+B:::::::::::::::::B o:::::::::::::::o d:::::::::::::::::d        y:::::y         
+B::::::::::::::::B   oo:::::::::::oo   d:::::::::ddd::::d       y:::::y          
+BBBBBBBBBBBBBBBBB      ooooooooooo      ddddddddd   ddddd      y:::::y           
+                                                              y:::::y            
+                                                             y:::::y             
+                                                            y:::::y              
+                                                           y:::::y               
+                                                          yyyyyyy                
+-->
+
+	<body>
+    <form>
+      <div id="buttons">
+        <select id="switch">
+          <option value="digital">Digital</option>
+          <option value="analog">Analog</option>
+          <option value="convert">Conversion</option>
+          <option value="why">Why?</option>
+          <option value="settings">Settings</option>
+        </select>
+
+
+        <input type="button" id="debug" value="Debug On" />
+      </div>
+    </form>
+    <div id="debugdisplay"><table><tr><td class="filler"></td><td>Percent&nbsp;of&nbsp;today&nbsp;completed</td><td id="deb1"></td></tr><tr><td class="filler"></td><td>Unix&nbsp;Time&nbsp;now</td><td id="deb2"></td></tr><tr><td class="filler"></td><td>Unix&nbsp;Time&nbsp;@&nbsp;midnight</td><td id="deb3"></td></tr><tr><td class="filler"></td><td>No&nbsp;of&nbsp;milliseconds&nbsp;so&nbsp;far&nbsp;today</td><td id="deb4"></td></tr><tr><td class="filler"></td><td>Standard&nbsp;time</td><td id="deb5"></td></tr><tr><td class="filler"></td><td>Cannonian&nbsp;time</td><td id="deb6"></td></tr></table></div>
+
+		<div id="wrapper">
+			<h1>Cannonian Time</h1>
+			<div id="digital">
+				<div class="row">
+					<div class="cell title hours" id="titleHours">Hours</div>
+					<div class="cell title minutes" id="titleMinutes">Minutes</div>
+					<div class="cell title centi" id="titleCenti">Centiminutes</div>
+				</div>
+				<div class="row">
+					<div class="cell display hours" id="displayHours"></div>
+					<div class="cell display minutes" id="displayMinutes"></div>
+					<div class="cell display centi" id="displayCenti"></div>
+          <div id="realseconds"></div>
+				</div>
+			</div>
+      <div id="analog">
+        <canvas id="clockCanvas"></canvas>
+        <canvas id="faviconCanvas"></canvas>
+      </div>
+      <div id="convert" >
+        <form id="conversion">
+          <table id="conversionTable">
+            <tr><td colspan="5" style="height: 13px" /></tr>
+            <tr>
+              <td><input type="text" id="convHour" class="convText" /></td>
+              <td><span class="colons"> : </span></td>
+              <td><input type="text" id="convMins" class="convText" /></td>
+              <td><span class="colons"> : </span></td>
+              <td><input type="text" id="convSecs" class="convText" /></td>
+            </tr>
+            <tr>
+              <td class="conversionLabel">Hours</td>
+              <td></td>
+              <td class="conversionLabel">Minutes</td>
+              <td></td>
+              <td class="conversionLabel">Seconds</td>
+            </tr>
+
+            <tr><td colspan="5" style="height: 24px" /></tr>
+          
+            <tr style="margin-top: 15px;">
+              <td><input type="text" id="dispHour" class="dispText" readonly="readonly"/></td>
+              <td><span class="colons"> : </span></td>
+              <td><input type="text" id="dispMins" class="dispText" readonly="readonly"/></td>
+              <td><span class="colons"> : </span></td>
+              <td><input type="text" id="dispSecs" class="dispText" readonly="readonly"/></td>
+            </tr>
+            <tr>
+              <td class="conversionLabel">Hours</td>
+              <td></td>
+              <td class="conversionLabel">Minutes</td>
+              <td></td>
+              <td class="conversionLabel">Centimins</td>
+            </tr>
+            <tr><td colspan="5" style="height: 13px" /></tr>
+          </table>
+        </form>
+      </div>
+      <div id="why">
+        <h2>Why?</h2>
+        Why should you use Cannonian Time? Why shouldn't you?<br/>
+        Cannonian Time is a metric-style time measurement which is fully compatible with the Gregorian Calender. 'Invented' by Jack Cannon, it replaces 24 hours in a day with 100 hours in a day (1 Cannonian Hour is equal to 14 minutes, 23 seconds under traditional methods). Each of these hours are split into 10 Cannonian minutes, which, in turn, is divided into 100 centi-minutes.<br/>
+        <br/>
+        <h3>But WHY?</h3>
+        Have you ever tried to do complex mathematics with time? It gets mighty complicated with the 24/60/60 time format, right? As humans, our mathematical education revolves around base-10 (decimal/denery) because our number system is based upon what our ancestors could count on their fingers. We've adopted base-10 units of measurements for many different things, including length (metres), volume (litres) and even temperature (celsius & kelvin), but our society insists on continuing with an inferior measuring system for time. Alas, dates are based upon rotations (days), lunar cycles (months) and orbits (years), and as we cant control these elements, the Gregorian calender is adequate (whilst certainly not perfect).But why do we have 24 hours? Because our elders liked the number 12. There are 12 zodiac signs, 12 days of Christmas, 12 deciples of Jesus and 12 olympian Gods. 12 is a number easily fractioned into halves or thirds, and therefore, in times passed, it made mathematical sense to base our measurements on it. However, in the modern age, our priorities for division are beyond halves and thirds. We need a time system based upon the decimal system, even if just for calculations. That's where Cannonian time comes in. Mathmeticians now use base-10 lengths or degrees (radians), scientists now use base-10 volumes, so why should programmers calculate using flawed systems? Cannonian time is a system perfectly designed for precise or general time-based calculation. Convert to Cannonian, do your calculations, and then, if needed, convert back to 'traditional time'!
+
+      </div>
+      <div id="settings">
+        <form id="settingsForm">
+          <table id="settingsTable">
+            <tr>
+              <td>
+                <h2>Favicon</h2>
+                <h3>Hand Color</h3>
+                <input type="text" id="faviconHandColor" /><br/>
+                <br/>
+                <h3>Notch Color</h3>
+                <input type="text" id="faviconNotchColor" /><br/>
+              </td>
+              <td>
+
+              </td>
+            </tr>
+          </table>
+        </form>
+      <div>
+		</div>
+        
+        
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+          JJJJJJJJJJJ   SSSSSSSSSSSSSSS 
+          J:::::::::J SS:::::::::::::::S
+          J:::::::::JS:::::SSSSSS::::::S
+          JJ:::::::JJS:::::S     SSSSSSS
+            J:::::J  S:::::S            
+            J:::::J  S:::::S            
+            J:::::J   S::::SSSS         
+            J:::::j    SS::::::SSSSS    
+            J:::::J      SSS::::::::SS  
+JJJJJJJ     J:::::J         SSSSSS::::S 
+J:::::J     J:::::J              S:::::S
+J::::::J   J::::::J              S:::::S
+J:::::::JJJ:::::::J  SSSSSSS     S:::::S
+ JJ:::::::::::::JJ   S::::::SSSSSS:::::S
+   JJ:::::::::JJ     S:::::::::::::::SS 
+     JJJJJJJJJ        SSSSSSSSSSSSSSS   
+-->
+
+		<script>
+      /**
+       * GLOBAL VARIABLES
+       */
+      var ctime = [];
+			var other;
+      var currMode;
+      var MILLISECONDSINADAY = ((1000 * 60) * 60) * 24;
+      var done = false;
+      var isDebug = false;
+      var faviconHand = '#FFFFFF';
+      var faviconNotch = '#888888';
+
+      $('#faviconHandColor').val(faviconHand);
+      $('#faviconNotchColor').val(faviconNotch);
+      
+      switchTo('digital');
+      $('#debugdisplay').hide()
+
+
+
+
+
+      /**
+       * EVENT LISTENERS
+       */
+
+      $('#faviconNotchColor').keyup(function () {
+        changeSettings('favNotch');
+        });
+
+      $('#faviconHandColor').keyup(function () {
+        changeSettings('favHand');
+        });
+
+      $('#switch').change(function() {
+        switchTo($('#switch').val());
+      });
+
+      $('#debug').click(function() {
+        switchDebug();
+      });
+
+      $('body').load(function () {
+        var favHand = getCookie('faviconHand');
+        console.log(favHand);
+        if(favHand) {
+          faviconHand = favHand;
+        }
+      });
+
+      $('.convText').keyup(function () {
+        var pHour = ($('#convHour').val() && !isNaN($('#convHour').val())) ? parseInt($('#convHour').val()) : 0;
+        var pMins = ($('#convMins').val() && !isNaN($('#convMins').val())) ? parseInt($('#convMins').val()) : 0;
+        var pSecs = ($('#convSecs').val() && !isNaN($('#convSecs').val())) ? parseInt($('#convSecs').val()) : 0;
+
+        var dateObj = new Date();
+        dateObj.setHours(pHour);
+        dateObj.setMinutes(pMins);
+        dateObj.setSeconds(pSecs);
+
+        var calcedTime = calcTime(dateObj, false);
+
+        $('#dispHour').val(calcedTime['hours']);
+        $('#dispMins').val(calcedTime['mins']);
+        $('#dispSecs').val(calcedTime['centi-mins']);
+      });
+
+
+
+      /**
+       * FUNCTIONS
+       */
+
+      function switchDebug() {
+        isDebug = !(isDebug);
+        (isDebug) ? $('#debug').val('Debug Off') : $('#debug').val('Debug On');
+        (isDebug) ? $('#debugdisplay').show() : $('#debugdisplay').hide();
+      }
+
+      function switchTo(mode) {
+        (mode == 'digital') ? $('#digital').show() : $('#digital').hide();
+        (mode == 'analog') ? $('#analog').show() : $('#analog').hide();
+        (mode == 'convert') ? $('#convert').show() : $('#convert').hide();
+        (mode == 'why') ? $('#why').show() : $('#why').hide();
+        (mode == 'settings') ? $('#settings').show() : $('#settings').hide();
+
+        currMode = mode;
+        updatePositioning();
+      }
+
+      function changeSettings(item) {
+        faviconHand = $('#faviconHandColor').val();
+        faviconNotch = $('#faviconNotchColor').val();
+        setCookie('faviconHandColor', faviconHand, 31);
+        setCookie('faviconNotchColor', faviconNotch, 31);
+      }
+
+      function updatePositioning() {
+        var useHei = $('#' + currMode).height();
+        var diff = 109;
+
+        var newPos = ( (useHei + diff) / 2 );
+
+        newPos = (newPos > ($('body').height() / 2)) ?  -1 * ($('body').height() / 2) : -1 * newPos;
+
+        $('#wrapper').animate({'margin-top': newPos + 'px'}, 1500);
+      }
+
+			function updateDisplay() {
+				ctime = calcTime(new Date(), true);
+				displayTime(ctime);
+        $(document).attr('title', twoDigits(ctime['hours']) + ':' + twoDigits(ctime['mins']) + ':' + twoDigits(ctime['centi-mins']));
+			}
+            
+			function calcTime(pDate, updateDebug) {
+        var calcedTime = [];
+
+				now = pDate.getTime();
+                
+				midnight = new Date();
+        midnight.setUTCHours(0);
+        midnight.setUTCMinutes(0);
+        midnight.setUTCSeconds(0);
+        midnight.setUTCMilliseconds(0);
+        midnight = midnight.getTime();
+                
+				msToday = now - midnight;
+                
+				percentOfDay = (msToday / MILLISECONDSINADAY) * 100;
+				other = percentOfDay;
+                
+        calcedTime['hours'] = Math.floor(other);
+				other = (other - calcedTime['hours']) * 10;
+                
+				calcedTime['mins'] = Math.floor(other);
+				other = (other - calcedTime['mins']) * 100;
+                
+				calcedTime['centi-mins'] = Math.floor(other);
+        other = (other - calcedTime['centi-mins']) * 10;
+
+        calcedTime['milli-mins'] = Math.floor(other);
+        other = (other - calcedTime['milli-mins']) * 1000;
+
+        calcedTime['micro-mins'] = Math.floor(other);
+
+        if(isDebug && updateDebug) {
+          done = true;
+            
+          var dateObj = new Date();
+          var timeNow = twoDigits(dateObj.getHours()) + ':' + twoDigits(dateObj.getMinutes()) + ':' + twoDigits(dateObj.getSeconds());
+            
+          $('#deb1').html(percentOfDay.toFixed(10));
+          $('#deb2').html(now);
+          $('#deb3').html(midnight);
+          $('#deb4').html(msToday);
+          $('#deb5').html(timeNow);
+          $('#deb6').html(twoDigits(ctime['hours']) + ':' + twoDigits(ctime['mins']) + ':' + twoDigits(ctime['centi-mins']));
+        }
+
+        return calcedTime;
+			}
+
+			function displayTime(calcedTime) {
+				$('#displayHours').html(calcedTime['hours']);
+				$('#displayMinutes').html(calcedTime['mins']);
+				$('#displayCenti').html(calcedTime['centi-mins']);
+			}
+      
+      function twoDigits(num) {
+        var str = null;
+        if (num < 10) {
+          str = '0' + num;
+        } else {
+          str = num;
+        }
+        return str;
+      }
+      
+      var timer = setInterval(function () {
+  			updateDisplay();
+			},1);
+      updateDisplay();
+
+
+
+
+
+
+
+
+
+
+
+      function hexToValues(str) {
+        return [parseInt(str.substr(1,2),16), parseInt(str.substr(3,2),16), parseInt(str.substr(5,2),16)];
+      }
+
+      function setCookie(c_name,value,exdays) {
+        var exdate=new Date();
+        exdate.setDate(exdate.getDate() + exdays);
+        var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+        document.cookie=c_name + "=" + c_value;
+      }
+
+      function getCookie(c_name) {
+        var i,x,y,ARRcookies=document.cookie.split(";");
+        for (i=0;i<ARRcookies.length;i++)
+        {
+          x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+          y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+          x=x.replace(/^\s+|\s+$/g,"");
+          if (x==c_name) {
+            return unescape(y);
+          }
+        }
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      /*
+              CCCCCCCCCCCCClllllll                         1111111   
+           CCC::::::::::::Cl:::::l                        1::::::1   
+         CC:::::::::::::::Cl:::::l                       1:::::::1   
+        C:::::CCCCCCCC::::Cl:::::l                       111:::::1   
+       C:::::C       CCCCCC l::::l    ooooooooooo           1::::1   
+      C:::::C               l::::l  oo:::::::::::oo         1::::1   
+      C:::::C               l::::l o:::::::::::::::o        1::::1   
+      C:::::C               l::::l o:::::ooooo:::::o        1::::l   
+      C:::::C               l::::l o::::o     o::::o        1::::l   
+      C:::::C               l::::l o::::o     o::::o        1::::l   
+      C:::::C               l::::l o::::o     o::::o        1::::l   
+       C:::::C       CCCCCC l::::l o::::o     o::::o        1::::l   
+        C:::::CCCCCCCC::::Cl::::::lo:::::ooooo:::::o     111::::::111
+         CC:::::::::::::::Cl::::::lo:::::::::::::::o     1::::::::::1
+           CCC::::::::::::Cl::::::l oo:::::::::::oo      1::::::::::1
+              CCCCCCCCCCCCCllllllll   ooooooooooo        111111111111
+      */
+
+      var p1 = new Processing(document.getElementById("clockCanvas"), function (processing) {
+        processing.setup = function() {
+          processing.width = 200;
+          processing.height = 200;
+
+          processing.fill(255);
+          processing.stroke(processing.color(255));;
+
+          font = processing.createFont("serif"); 
+          processing.textFont(font, 18);
+
+          done = false;
+        }
+
+        processing.draw = function() {
+          // determine center and max clock arm length
+          var centerX = processing.width / 2, centerY = processing.height / 2;
+          var maxArmLength = Math.min(centerX, centerY);
+
+          function drawArm(position, lengthScale, weight) {      
+            processing.strokeWeight(weight);
+            processing.stroke(processing.color(255));
+            processing.line(centerX, centerY, 
+              centerX + Math.sin(position * 2 * Math.PI) * lengthScale * maxArmLength,
+              centerY - Math.cos(position * 2 * Math.PI) * lengthScale * maxArmLength);
+          }
+
+          function drawNotches() {
+            for(var i = 0; i < 50; i++) {
+              if (i % 10 == 0) {
+                processing.stroke(processing.color(255, 96));
+                drawNotch((i * 0.02), 0.8, 3);
+              } else if (i % 5 == 0) {
+                processing.stroke(processing.color(255, 96));
+                drawNotch((i * 0.02), 0.85, 3);
+              } else {
+                processing.stroke(processing.color(255, 64));
+                drawNotch((i * 0.02), 0.9, 3);
+              }
+            }
+          }
+
+          function drawNotch(position, length, weight) {
+            processing.strokeWeight(weight);
+            processing.line(
+              centerX + Math.sin(position * 2 * Math.PI) * (maxArmLength * length), 
+              centerY - Math.cos(position * 2 * Math.PI) * (maxArmLength * length), 
+              centerX + Math.sin(position * 2 * Math.PI) * maxArmLength,
+              centerY - Math.cos(position * 2 * Math.PI) * maxArmLength);
+          }
+
+          function drawNumbers() {
+            for (var i = 1; i <= 5; i++) {
+              processing.fill(255, 128);
+              processing.stroke(processing.color(255, 128));
+              processing.textAlign('CENTER', 'CENTER');
+              processing.text((i + '0'),
+                (centerX + Math.sin( (0.2 * i) * 2 * Math.PI) * (maxArmLength * 0.65)) - 9,
+                (centerY - Math.cos( (0.2 * i) * 2 * Math.PI) * (maxArmLength * 0.65)) + 6);
+            }
+          }
+
+          processing.background(255, 1);
+
+          //var now = new Date();
+
+
+          var hoursPosition = (ctime['hours'] % 50 + ctime['mins'] / 10) / 50;
+          drawArm(hoursPosition, 0.7, 6);
+
+          var minutesPosition = (ctime['mins'] + (ctime['centi-mins'] / 100)) / 10;
+          drawArm(minutesPosition, 0.95, 3);
+
+          var secondsPosition = (ctime['centi-mins'] + (ctime['milli-mins'] / 10) + (ctime['micro-mins'] / 10000)) / 100;
+          drawArm(secondsPosition, 1, 1);
+
+
+
+          drawNotches();
+          drawNumbers();
+
+        };
+        
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      /*
+              CCCCCCCCCCCCClllllll                        222222222222222    
+           CCC::::::::::::Cl:::::l                       2:::::::::::::::22  
+         CC:::::::::::::::Cl:::::l                       2::::::222222:::::2 
+        C:::::CCCCCCCC::::Cl:::::l                       2222222     2:::::2 
+       C:::::C       CCCCCC l::::l    ooooooooooo                    2:::::2 
+      C:::::C               l::::l  oo:::::::::::oo                  2:::::2 
+      C:::::C               l::::l o:::::::::::::::o              2222::::2  
+      C:::::C               l::::l o:::::ooooo:::::o         22222::::::22   
+      C:::::C               l::::l o::::o     o::::o       22::::::::222     
+      C:::::C               l::::l o::::o     o::::o      2:::::22222        
+      C:::::C               l::::l o::::o     o::::o     2:::::2             
+       C:::::C       CCCCCC l::::l o::::o     o::::o     2:::::2             
+        C:::::CCCCCCCC::::Cl::::::lo:::::ooooo:::::o     2:::::2       222222
+         CC:::::::::::::::Cl::::::lo:::::::::::::::o     2::::::2222222:::::2
+           CCC::::::::::::Cl::::::l oo:::::::::::oo      2::::::::::::::::::2
+              CCCCCCCCCCCCCllllllll   ooooooooooo        22222222222222222222
+        */
+
+
+      var p2 = new Processing(document.getElementById("faviconCanvas"), function (processing) {
+
+
+
+
+
+
+
+
+
+
+        processing.setup = function() {
+          processing.width = 64;
+          processing.height = 64;
+          processing.background(255, 1);
+        }
+
+
+
+
+
+
+
+
+        processing.draw = function() {
+          var centerX = processing.width / 2, centerY = processing.height / 2;
+          var maxArmLength = Math.min(centerX, centerY) * 0.8;
+
+
+          function drawArm(position, lengthScale, weight) {      
+            processing.strokeWeight(weight);
+            var colors = hexToValues(faviconHand);
+            processing.stroke(processing.color(colors[0],colors[1],colors[2]));
+            processing.line(centerX, centerY, 
+              centerX + Math.sin(position * 2 * Math.PI) * lengthScale * maxArmLength,
+              centerY - Math.cos(position * 2 * Math.PI) * lengthScale * maxArmLength);
+          }
+
+          function drawNotches() {
+            for(var i = 0; i < 10; i++) {
+              if(i % 2 == 0) {
+                var colors = hexToValues(faviconNotch);
+                processing.stroke(processing.color(colors[0],colors[1],colors[2]));
+                drawNotch((i * 0.10), 0.8, 4);
+              } else {/*
+                processing.stroke(processing.color(128,128,255));
+                drawNotch((i * 0.10), 0.9, 4);
+              */}
+            }
+          }
+
+          function drawNotch(position, length, weight) {
+            processing.strokeWeight(weight);
+            processing.line(
+              centerX + Math.sin(position * 2 * Math.PI) * (maxArmLength * length), 
+              centerY - Math.cos(position * 2 * Math.PI) * (maxArmLength * length), 
+              centerX + Math.sin(position * 2 * Math.PI) * maxArmLength,
+              centerY - Math.cos(position * 2 * Math.PI) * maxArmLength);
+          }
+
+
+
+
+          processing.background(255, 1);
+
+
+          drawNotches();
+
+          drawArm(((ctime['hours'] % 50 + ctime['mins'] / 10) / 50), 0.7, 10);
+          drawArm(((ctime['mins'] + (ctime['centi-mins'] / 100)) / 10), 0.95, 5);
+          //drawArm(((ctime['centi-mins'] + (ctime['milli-mins'] / 10) + (ctime['micro-mins'] / 10000)) / 100), 1, 2);
+
+
+          $('#faviconDraw').attr('href', document.getElementById("faviconCanvas").getContext('2d').canvas.toDataURL('image/png'));
+        }
+
+
+
+
+
+
+      });
+
+
+
+
+
+
+
+
+
+
+		</script>
+	</body>
+</html>
