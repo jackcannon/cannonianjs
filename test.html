@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <style type="text/css">
+      body {
+        font-family: monospace;
+        color: #FFFFFF;
+        background-color: #000000;
+      }
+    </style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="./index.js"></script>
+    <script type="text/javascript">
+      $(function () {
+        var errors = [];
+
+        function tl(p1, p2) { // test log
+          if(p1 != null && p2 != null) {
+            var r1 = eval(p1);
+            if (!(r1 == p2)) {
+              errors.push([p1,p2]);
+            }
+            print((r1 == p2) + ': ' + p1 + ' == ' + p2 +'<br/>');
+          }
+        }
+
+        function print(msg) {
+          $('body').append(msg);
+        }
+
+        function runTests() {
+          console.log(cannonianjs().hide());
+
+          /*tl("cannonianjs.calcTime(-1)", '-0');
+
+          tl("cannonianjs.twoDigits(-1)", '-01');
+          tl("cannonianjs.twoDigits(0)", '00');
+          tl("cannonianjs.twoDigits(1)", '01');
+          tl("cannonianjs.twoDigits(10)", '10');
+          tl("cannonianjs.twoDigits(100)", '100');
+
+          print('<br/>No. of errors: ' + errors.length);*/
+        }
+
+        runTests();
+
+      });
+    </script>
+  </head>
+  <body>
+
+  </body>
+</html>
