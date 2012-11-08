@@ -1,7 +1,6 @@
 /**
  * GLOBAL VARIABLES
  */
-var other;
 var MILLISECONDSINADAY = ((1000 * 60) * 60) * 24;
 
 
@@ -9,127 +8,68 @@ var MILLISECONDSINADAY = ((1000 * 60) * 60) * 24;
  * FUNCTIONS
  */
 
-/*
-cannonianjs.prototype = {
-
-  calcTime : function(pDate) {
-    var calcedTime = [];
-
-    now = pDate.getTime();
-    
-    midnight = new Date();
-    midnight.setUTCHours(0);
-    midnight.setUTCMinutes(0);
-    midnight.setUTCSeconds(0);
-    midnight.setUTCMilliseconds(0);
-    midnight = midnight.getTime();
-    
-    msToday = now - midnight;
-    
-    pod = (msToday / MILLISECONDSINADAY) * 100; //percent of day
-    other = pod;
-    
-    calcedTime['hours'] = Math.floor(other);
-    other = (other - calcedTime['hours']) * 10;
-            
-    calcedTime['mins'] = Math.floor(other);
-    other = (other - calcedTime['mins']) * 100;
-    
-    calcedTime['centi-mins'] = Math.floor(other);
-    other = (other - calcedTime['centi-mins']) * 10;
-    
-    calcedTime['milli-mins'] = Math.floor(other);
-    other = (other - calcedTime['milli-mins']) * 1000;
-    
-    calcedTime['micro-mins'] = Math.floor(other);
-    
-    return calcedTime;
-  },
-
-  twoDigits : function(num) {
-    var str = null;
-    if (num >= 0 && num < 10) {
-      str = '0' + num;
-    } else if (num < 0 && num > -10) {
-      str = '-0' + (num * -1);
-    } else {
-      str = num;
-    }
-    return str;
-  }
-}*/
-
-
-
-
-
-
-/*=====================================================
-*
-* _JL : A Really Small JavaScript framework
-* (c) Michael Jasper 2011
-*
-======================================================*/
-
-/*  _ Object Constructor
-========================*/
-
-function cannonianjs() {
+function cannonianjs(p) {
 
   if (window === this) {
-    return new cannonianjs();
+    return new cannonianjs(p);
   }
-
+  this.time = cannonianjs.prototype.convertToCa((p)? p : new Date());
+  return this;
 }
 
-/*  _ Prototype Functions
-============================*/
-
 cannonianjs.prototype = {
-  
-    calcTime : function(pDate) {
-    var calcedTime = [];
+  conv : function(p) {
 
-    now = pDate.getTime();
-    
-    midnight = new Date();
-    midnight.setUTCHours(0);
-    midnight.setUTCMinutes(0);
-    midnight.setUTCSeconds(0);
-    midnight.setUTCMilliseconds(0);
-    midnight = midnight.getTime();
-    
-    msToday = now - midnight;
-    
-    pod = (msToday / MILLISECONDSINADAY) * 100; //percent of day
-    other = pod;
-    
-    calcedTime['hours'] = Math.floor(other);
-    other = (other - calcedTime['hours']) * 10;
-            
-    calcedTime['mins'] = Math.floor(other);
-    other = (other - calcedTime['mins']) * 100;
-    
-    calcedTime['centi-mins'] = Math.floor(other);
-    other = (other - calcedTime['centi-mins']) * 10;
-    
-    calcedTime['milli-mins'] = Math.floor(other);
-    other = (other - calcedTime['milli-mins']) * 1000;
-    
-    calcedTime['micro-mins'] = Math.floor(other);
-    
-    return calcedTime;
   },
 
-  twoDigits : function(num) {
-    var str = null;
-    if (num >= 0 && num < 10) {
-      str = '0' + num;
-    } else if (num < 0 && num > -10) {
-      str = '-0' + (num * -1);
-    } else {
-      str = num;
-    }
-    return str;
+  convertToCa : function(pDate) {
+    var calcedTime = [], midnight, pod, pst;
+    
+    midnight = new Date(); midnight.setUTCHours(0); midnight.setUTCMinutes(0); midnight.setUTCSeconds(0); midnight.setUTCMilliseconds(0); midnight = midnight.getTime();
+    
+    pod = ((pDate.getTime() - midnight) / MILLISECONDSINADAY); //percent of day
+    pst = pod.toString(); //pod string
+    
+    calcedTime['h'] = Math.floor(parseInt(pst.charAt(2) + '' + pst.charAt(3)));
+    calcedTime['m'] = Math.floor(parseInt(pst.charAt(4)));
+    calcedTime['s'] = Math.floor(parseInt(pst.charAt(5) + '' + pst.charAt(6)));
+    calcedTime['l'] = Math.floor(parseInt(pst.charAt(7)));
+    calcedTime['c'] = Math.floor(parseInt(pst.charAt(8) + '' + pst.charAt(9) + '' + pst.charAt(10)));
+
+    return this.arrToJson(calcedTime);
+  },
+
+  arrToJson : function(p) {
+    return {
+      h : p['h'],
+      m : p['m'],
+      s : p['s'],
+      l : p['l'],
+      c : p['c']
+    };
+  },
+
+  jsonToArr : function(p) {
+    var a = [];
+    a['h'] = p.h;
+    a['m'] = p.m;
+    a['s'] = p.s;
+    a['l'] = p.l;
+    a['c'] = p.c;
+    return a;
+  },
+
+  toDigits : function(num, dig) {
+    var str = null, y = 1, z = '';
+    for(var i = 1; i < dig; i++) {y=y*10; z=z+'0';}
+    return (num >= 0 && num < y) ? z.substr(0,(dig - num.toString().length)) + num : num;
+  },
+
+  toString : function() {
+    return this.toDigits(this.time.h,2) + ':' + 
+      this.toDigits(this.time.m,2) + ':' + 
+      this.toDigits(this.time.s,2) + ':' + 
+      this.toDigits(this.time.l,2) + ':' + 
+      this.toDigits(this.time.c,3);
   }
 };

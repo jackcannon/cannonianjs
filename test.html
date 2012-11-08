@@ -20,23 +20,26 @@
             if (!(r1 == p2)) {
               errors.push([p1,p2]);
             }
-            print((r1 == p2) + ': ' + p1 + ' == ' + p2 +'<br/>');
+            print((r1 == p2) + ': ' + p1 + ' == ' + p2);
           }
         }
 
         function print(msg) {
-          $('body').append(msg);
+          $('body').append(msg +'<br/>');
         }
 
         function runTests() {
-          //console.log(cannonianjs().hide());
+          x = new cannonianjs();
 
-          //tl("cannonianjs().calcTime(-1)", '-0');
-          tl("cannonianjs().twoDigits(-1)", '-01');
-          tl("cannonianjs().twoDigits(0)", '00');
-          tl("cannonianjs().twoDigits(1)", '01');
-          tl("cannonianjs().twoDigits(10)", '10');
-          tl("cannonianjs().twoDigits(100)", '100');
+          testDate = new Date(); testDate.setHours(1); testDate.setMinutes(0); testDate.setSeconds(0); testDate.setMilliseconds(0);
+
+          tl("x.toDigits(-1,2)", '-01');
+          tl("x.toDigits(0,2)", '00');
+          tl("x.toDigits(1,2)", '01');
+          tl("x.toDigits(10,4)", '0010');
+          tl("x.toDigits(100,5)", '00100');
+
+          tl("new cannonianjs(testDate).toString()", '04:01:66:06:666');
 
           print('<br/>No. of errors: ' + errors.length);
         }
