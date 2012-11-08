@@ -29,17 +29,16 @@
         }
 
         function runTests() {
-          console.log(cannonianjs().hide());
+          //console.log(cannonianjs().hide());
 
-          /*tl("cannonianjs.calcTime(-1)", '-0');
+          //tl("cannonianjs().calcTime(-1)", '-0');
+          tl("cannonianjs().twoDigits(-1)", '-01');
+          tl("cannonianjs().twoDigits(0)", '00');
+          tl("cannonianjs().twoDigits(1)", '01');
+          tl("cannonianjs().twoDigits(10)", '10');
+          tl("cannonianjs().twoDigits(100)", '100');
 
-          tl("cannonianjs.twoDigits(-1)", '-01');
-          tl("cannonianjs.twoDigits(0)", '00');
-          tl("cannonianjs.twoDigits(1)", '01');
-          tl("cannonianjs.twoDigits(10)", '10');
-          tl("cannonianjs.twoDigits(100)", '100');
-
-          print('<br/>No. of errors: ' + errors.length);*/
+          print('<br/>No. of errors: ' + errors.length);
         }
 
         runTests();
