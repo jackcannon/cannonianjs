@@ -1,7 +1,10 @@
 /**
  * GLOBAL VARIABLES
  */
-var MILLISECONDSINADAY = ((1000 * 60) * 60) * 24;
+var MS_DAY = ((1000 * 60) * 60) * 24; // milliseconds in a day
+var MS_HOU = (1000 * 60) * 60; // milliseconds in an hour
+var MS_MIN = 1000 * 60; // milliseconds in a day
+var MS_SEC = 1000; // milliseconds in a day
 
 
 /**
@@ -22,12 +25,13 @@ cannonianjs.prototype = {
 
   },
 
-  convertToCa : function(pDate) {
+  convertToCa : function(p) {
+    if (!p) p = new Date();
     var calcedTime = [], midnight, pod, pst;
     
     midnight = new Date(); midnight.setUTCHours(0); midnight.setUTCMinutes(0); midnight.setUTCSeconds(0); midnight.setUTCMilliseconds(0); midnight = midnight.getTime();
     
-    pod = ((pDate.getTime() - midnight) / MILLISECONDSINADAY); //percent of day
+    pod = ((p.getTime() - midnight) / MS_DAY); //percent of day
     pst = pod.toString(); //pod string
     
     calcedTime['h'] = Math.floor(parseInt(pst.charAt(2) + '' + pst.charAt(3)));
@@ -37,6 +41,21 @@ cannonianjs.prototype = {
     calcedTime['c'] = Math.floor(parseInt(pst.charAt(8) + '' + pst.charAt(9) + '' + pst.charAt(10)));
 
     return this.arrToJson(calcedTime);
+  },
+
+  convertToSt : function(p) {
+    if (!p) p = this.toString();
+    pod = parseFloat(('0.' + p).split(':').join(''));
+    var o = pod * MS_DAY;
+
+    var oo = o;
+
+    var sH = Math.floor(o / MS_HOU); o = (o % MS_HOU);
+    var sM = Math.floor(o / MS_MIN); o = (o % MS_MIN);
+    var sS = Math.floor(o / MS_SEC); o = (o % MS_SEC);
+    var sN = Math.floor(o);
+    console.log(p, pod, oo, sH, sM, sS, sN);
+    return this.toDigits(sH,2) + ':' + this.toDigits(sM,2) + ':' + this.toDigits(sS,2) + ':' + this.toDigits(sN,2);
   },
 
   arrToJson : function(p) {

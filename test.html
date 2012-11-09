@@ -20,7 +20,7 @@
             if (!(r1 == p2)) {
               errors.push([p1,p2]);
             }
-            print((r1 == p2) + ': ' + p1 + ' == ' + p2);
+            print((r1 == p2) + ' (' + r1 + ') : ' + p1 + ' == ' + p2);
           }
         }
 
@@ -31,7 +31,8 @@
         function runTests() {
           x = new cannonianjs();
 
-          testDate = new Date(); testDate.setHours(1); testDate.setMinutes(0); testDate.setSeconds(0); testDate.setMilliseconds(0);
+          testDateVals = [2,0,0,0];
+          testDate = new Date(); testDate.setHours(testDateVals[0]); testDate.setMinutes(testDateVals[1]); testDate.setSeconds(testDateVals[2]); testDate.setMilliseconds(testDateVals[3]);
 
           tl("x.toDigits(-1,2)", '-01');
           tl("x.toDigits(0,2)", '00');
@@ -39,7 +40,11 @@
           tl("x.toDigits(10,4)", '0010');
           tl("x.toDigits(100,5)", '00100');
 
-          tl("new cannonianjs(testDate).toString()", '04:01:66:06:666');
+          tl("new cannonianjs(testDate).toString()", '08:03:33:03:333');
+
+          x.convertToSt('54:01:67:00:000');
+          x.convertToSt();
+          tl("x.convertToSt(new cannonianjs(testDate).toString())", '02:00:00:00');
 
           print('<br/>No. of errors: ' + errors.length);
         }
