@@ -22,11 +22,28 @@ function cannonianjs(p) {
 
 cannonianjs.prototype = {
   conv : function(p) {
-
+    if (!p || ((p.toString().split('.').length-1) == 1)) return false;
+    if (p instanceof Date) {
+      return this.toString(this.convertToCa(p));
+    } else if (((p.split(':').length-1) == 1) || ((p.split(':').length-1) == 3)) {
+      //is standard time
+      return this.toString(this.convertToCa(p));
+    } else if ((p.split(':').length-1) == 4) {
+      // is cannonian time
+      return this.convertToSt(p);
+    }
+    return false;
   },
 
   convertToCa : function(p) {
     if (!p) p = new Date();
+    if (!(p instanceof Date)) {
+      if ((p.split(':').length-1) == 1) {
+        p = this.createDate([this.parseIntFix(p.split(':')[0]), this.parseIntFix(p.split(':')[1]),0,0]);
+      } else if ((p.split(':').length-1) == 3) {
+        p = this.createDate([this.parseIntFix(p.split(':')[0]), this.parseIntFix(p.split(':')[1]),this.parseIntFix(p.split(':')[2]),this.parseIntFix(p.split(':')[3])]);
+      }
+    }
     var calcedTime = [], midnight, pod, pst;
     
     midnight = new Date(); midnight.setUTCHours(0); midnight.setUTCMinutes(0); midnight.setUTCSeconds(0); midnight.setUTCMilliseconds(0); midnight = midnight.getTime();
@@ -34,18 +51,19 @@ cannonianjs.prototype = {
     pod = ((p.getTime() - midnight) / MS_DAY); //percent of day
     pst = pod.toString(); //pod string
 
-    calcedTime['h'] = Math.floor(this.parseIntFix(pst.charAt(2) + '' + pst.charAt(3)));
-    calcedTime['m'] = Math.floor(this.parseIntFix(pst.charAt(4)));
-    calcedTime['s'] = Math.floor(this.parseIntFix(pst.charAt(5) + '' + pst.charAt(6)));
-    calcedTime['l'] = Math.floor(this.parseIntFix(pst.charAt(7)));
-    calcedTime['c'] = Math.floor(this.parseIntFix(pst.charAt(8) + '' + pst.charAt(9) + '' + (parseInt(pst.charAt(10)) + 1 )));
+    calcedTime['h'] = this.formatAsNum([pst.charAt(2), pst.charAt(3)]);
+    calcedTime['m'] = this.formatAsNum([pst.charAt(4)]);
+    calcedTime['s'] = this.formatAsNum([pst.charAt(5), pst.charAt(6)]);
+    calcedTime['l'] = this.formatAsNum([pst.charAt(7)]);
+    calcedTime['c'] = this.formatAsNum([pst.charAt(8), pst.charAt(9), pst.charAt(10)]);
 
     return this.arrToJson(calcedTime);
   },
 
   convertToSt : function(p) {
     if (!p) p = this.toString();
-    pod = this.strToDec(p);
+    pod = this.strToDec(p) + 0.000000001;
+
     var o = pod * MS_DAY;
 
     var sH = Math.floor(o / MS_HOU); o = (o % MS_HOU);
@@ -64,8 +82,22 @@ cannonianjs.prototype = {
     return q;
   },
 
+  formatAsNum : function(p) {
+    var str = '';
+
+    for(var i = 0; i < p.length; i++) {
+      if (p[i] == '' || p[i] == ' ' || p[i] == null) {
+        str = str + '0';
+      } else {
+        str = str + '' + p[i];
+      }
+    }
+    return Math.floor(this.parseIntFix(str));
+  },
+
   parseIntFix : function(p) {
     while(true) {
+      if(p == '0' || p == '' || p == ' ') return 0;
       if(p.charAt(0) == '0') {
         p = p.substr(1,p.length - 1);
       } else {
@@ -96,18 +128,29 @@ cannonianjs.prototype = {
     return a;
   },
 
+  createDate : function(p) {
+    if(!p || !(p instanceof Array) || (p.length != 4)) return false;
+    var date = new Date();
+    date.setUTCHours(p[0]);
+    date.setUTCMinutes(p[1]);
+    date.setUTCSeconds(p[2]);
+    date.setUTCMilliseconds(p[3]);
+    return date;
+  },
+
   toDigits : function(num, dig) {
     var str = null, y = 1, z = '';
     for(var i = 1; i < dig; i++) {y=y*10; z=z+'0';}
     return (num >= 0 && num < y) ? z.substr(0,(dig - num.toString().length)) + num : num;
   },
 
-  toString : function() {
-    return this.toDigits(this.time.h,2) + ':' + 
-      this.toDigits(this.time.m,2) + ':' + 
-      this.toDigits(this.time.s,2) + ':' + 
-      this.toDigits(this.time.l,2) + ':' + 
-      this.toDigits(this.time.c,3);
+  toString : function(p) { //converts JSON object to string
+    if(!p) p = this.time;
+    return this.toDigits(p.h,2) + ':' + 
+      this.toDigits(p.m,2) + ':' + 
+      this.toDigits(p.s,2) + ':' + 
+      this.toDigits(p.l,2) + ':' + 
+      this.toDigits(p.c,3);
   },
 
   toDec : function() {
