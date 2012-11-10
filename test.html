@@ -1,56 +1,46 @@
 <!doctype html>
 <html>
   <head>
-    <style type="text/css">
-      body {
-        font-family: monospace;
-        color: #FFFFFF;
-        background-color: #000000;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="./test.css" />
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="./test.js"></script>
     <script type="text/javascript" src="./index.js"></script>
     <script type="text/javascript">
       $(function () {
-        var errors = [];
+        x = new cannonianjs();
 
-        function tl(p1, p2) { // test log
-          if(p1 != null && p2 != null) {
-            var r1 = eval(p1);
-            if (!(r1 == p2)) {
-              errors.push([p1,p2]);
-            }
-            print((r1 == p2) + ' (' + r1 + ') : ' + p1 + ' == ' + p2);
-          }
+        testDateVals = [
+          [2,0,0,0],
+          [14,0,0,0],
+          [23,59,59,0]
+        ];
+
+        testDate = [];
+
+        for(var i = 0; i < testDateVals.length; i++) {
+          testDate[i] = new Date();
+          testDate[i].setHours(testDateVals[i][0]);
+          testDate[i].setMinutes(testDateVals[i][1]);
+          testDate[i].setSeconds(testDateVals[i][2]);
+          testDate[i].setMilliseconds(testDateVals[i][3]);
         }
 
-        function print(msg) {
-          $('body').append(msg +'<br/>');
-        }
+        h(3, 'toDigits');
+        tl("x.toDigits(-1,2)", '-01');
+        tl("x.toDigits(0,2)", '00');
+        tl("x.toDigits(1,2)", '01');
+        tl("x.toDigits(10,4)", '0010');
+        tl("x.toDigits(100,5)", '00100');
 
-        function runTests() {
-          x = new cannonianjs();
 
-          testDateVals = [2,0,0,0];
-          testDate = new Date(); testDate.setHours(testDateVals[0]); testDate.setMinutes(testDateVals[1]); testDate.setSeconds(testDateVals[2]); testDate.setMilliseconds(testDateVals[3]);
 
-          tl("x.toDigits(-1,2)", '-01');
-          tl("x.toDigits(0,2)", '00');
-          tl("x.toDigits(1,2)", '01');
-          tl("x.toDigits(10,4)", '0010');
-          tl("x.toDigits(100,5)", '00100');
+        h(3, 'convertToSt');
+        tl("x.convertToSt(new cannonianjs(testDate[0]).toString())", '02:00:00:00');
+        tl("x.convertToSt(new cannonianjs(testDate[1]).toString())", '14:00:00:00');
+        tl("x.convertToSt(new cannonianjs(testDate[2]).toString())", '23:59:59:00');
 
-          tl("new cannonianjs(testDate).toString()", '08:03:33:03:333');
 
-          x.convertToSt('54:01:67:00:000');
-          x.convertToSt();
-          tl("x.convertToSt(new cannonianjs(testDate).toString())", '02:00:00:00');
-
-          print('<br/>No. of errors: ' + errors.length);
-        }
-
-        runTests();
-
+        pr('<br/>No. of errors: ' + errors.length);
       });
     </script>
   </head>
