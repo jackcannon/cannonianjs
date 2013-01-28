@@ -1,4 +1,8 @@
 
+/**
+ * Jack's Homebrew unit tester!
+ */
+
 var errors = [];
 
 function test(name, func) {
@@ -7,10 +11,14 @@ function test(name, func) {
 }
 
 function tl(p1, p2) { // test log
+  if (p1 instanceof Object) p1 = JSON.stringify(p1);
+  if (p2 instanceof Object) p2 = JSON.stringify(p2);
   var testPassed = true;
 
   if(p1 != null && p2 != null) {
     var r1 = eval(p1);
+    if (r1 instanceof Object) r1 = JSON.stringify(r1);
+
     if (!(r1 == p2)) {
       errors.push([p1,p2]);
     }
