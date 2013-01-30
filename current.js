@@ -1,10 +1,6 @@
 /**
- * To do
- * 
- * - Finish all output formatters (toString, toDec, etc.)
- * - Add 'to' function, where you pass a string of i.e. 'string' and it does a toString()
- * - Enable decimels to be passed in as params
- * - Write documentation
+ * Cannonian.js
+ * Made by Jack Cannon - c.annon.co.uk
  */
 
 

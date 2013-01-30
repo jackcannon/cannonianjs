@@ -1,4 +1,9 @@
 /**
+ * Cannonian.js
+ * Made by Jack Cannon - c.annon.co.uk
+ */
+
+/**
  * GLOBAL VARIABLES
  */
 var MS_DAY = ((1000 * 60) * 60) * 24; // milliseconds in a day
