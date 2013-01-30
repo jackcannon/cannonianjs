@@ -158,8 +158,8 @@ cannonianjs.prototype = {
       return {
         hour: parseInt(p.getHours()) || 0,
         minu: parseInt(p.getMinutes()) || 0,
-        seco: 0,
-        mill: 0,
+        seco: parseInt(p.getSeconds())  || 0,
+        mill: parseInt(p.getMilliseconds()) || 0,
         micr: 0
       }
     } else if (type == 'datestring') {
