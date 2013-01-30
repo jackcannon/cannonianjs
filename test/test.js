@@ -5,11 +5,6 @@
 
 var errors = [];
 
-function test(name, func) {
-  console.log(name);
-  console.log(func());
-}
-
 function tl(p1, p2) { // test log
   if (p1 instanceof Object) p1 = JSON.stringify(p1);
   if (p2 instanceof Object) p2 = JSON.stringify(p2);
