@@ -106,7 +106,7 @@ cannonianjs.prototype = {
     } else if (p <= 1 && p >= 0) {
       return 'dec';
     } else if (typeof p == 'string') {
-      if (/^([0-9]{2}:[0-9]{2}:[0-9]{2}:[0-9]{2}:[0-9]{3})$/.test(p)) {
+      if (/^([0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{3})$/.test(p)) {
         return 'cannonianstring';
       } else if (/^([0-9]{2}:[0-9]{2}:[0-9]{2}:[0-9]{2})$/.test(p)) {
         return 'standardstring';
@@ -142,7 +142,7 @@ cannonianjs.prototype = {
         micr: 0
       };
     } else if (type == 'cannonianstring' || type == 'cannonian' || type == 'cann' || type == 'ca') {
-      var nums = p.split(':');
+      var nums = p.split('.');
       return {
         hour: parseInt(nums[0]) || 0,
         minu: parseInt(nums[1]) || 0,
@@ -182,10 +182,10 @@ cannonianjs.prototype = {
 
   toCan : function(p) {
     if(!p) p = this.canno;
-    return this.helper.toDigits(p.hour,2) + ':' + 
-      this.helper.toDigits(p.minu,2) + ':' + 
-      this.helper.toDigits(p.cent,2) + ':' + 
-      this.helper.toDigits(p.mill,2) + ':' + 
+    return this.helper.toDigits(p.hour,2) + '.' + 
+      this.helper.toDigits(p.minu,2) + '.' + 
+      this.helper.toDigits(p.cent,2) + '.' + 
+      this.helper.toDigits(p.mill,2) + '.' + 
       this.helper.toDigits(p.micr,3);
   },
 
