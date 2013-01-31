@@ -83,11 +83,17 @@ cannonianjs.prototype = {
     if (fromType == 'standardstring' || fromType == 'standardstringshort' || fromType == 'date' || fromType == 'datestring') {
       res.stand = this.parse(fromType, p);
       res.canno = this.helper.convertToCa.bind(this)(res.stand);
-    } else if (fromType == 'cannonianstring') {
+    } else if (fromType == 'cannonianstring' || fromType == 'dec') {
       res.canno = this.parse(fromType, p);
       res.stand = this.helper.convertToSt.bind(this)(res.canno);
+    } else if (fromType == 'stanpart') {
+      res.stand = p
+      res.canno = this.helper.convertToCa.bind(this)(res.stand);
+    } else if (fromType == 'cannpart') {
+      res.canno = p
+      res.stand = this.helper.convertToSt.bind(this)(res.canno);
     } else {
-      console.log('There seems to be an error...');
+      res.message = 'There seems to be an error...';
     }
 
     if(toType && (toType == 'standard' || toType == 'stand' || toType == 'st')) {
@@ -103,6 +109,10 @@ cannonianjs.prototype = {
 
     if(p instanceof Date) {
       return 'date';
+    } else if (p instanceof Object && p.hour && p.minu && p.seco && p.mill && p.micr) {
+      return 'stanpart';
+    } else if (p instanceof Object && p.hour && p.minu && p.cent && p.mill && p.micr) {
+      return 'cannpart';
     } else if (p.canno && p.stand) {
       return 'cannonianobj';
     } else if(!isNaN(Date.parse(p))) {
