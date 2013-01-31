@@ -29,13 +29,24 @@ function cannonianjs(p) {
 
   var type = this.getType(p);
 
-  if (type != 'cannonianobj') {
-    var converted = this.conv(p, type, null);
+  if (type != 'error') {
+    if (type != 'cannonianobj') {
+      var converted = this.conv(p, type, null);
+    } else {
+      var converted = p;
+    }
   } else {
-    var converted = p;
+    var converted = {message: 'Unknown Error'};
   }
+
+  if (!!converted.message) {
+    this.message = converted.message;
+  }
+
   this.stand = converted.stand;
   this.canno = converted.canno;
+  
+  
 
   /*
    * FORMATS
@@ -103,11 +114,15 @@ cannonianjs.prototype = {
   getType : function (p) {
     if(!p) return null;
 
+    function isSet(q) {
+      return (q || q == 0);
+    }
+
     if(p instanceof Date) {
       return 'date';
-    } else if (p instanceof Object && p.hour && p.minu && p.seco && p.mill && p.micr) {
+    } else if (isSet(p.hour) && isSet(p.minu) && isSet(p.seco) && isSet(p.mill) && isSet(p.micr)) {
       return 'stanpart';
-    } else if (p instanceof Object && p.hour && p.minu && p.cent && p.mill && p.micr) {
+    } else if (isSet(p.hour) && isSet(p.minu) && isSet(p.cent) && isSet(p.mill) && isSet(p.micr)) {
       return 'cannpart';
     } else if (p.canno && p.stand) {
       return 'cannonianobj';
@@ -123,10 +138,10 @@ cannonianjs.prototype = {
       } else if (/^([0-9]{2}:[0-9]{2})$/.test(p)) {
         return 'standardstringshort';
       } else {
-        return null;
+        return 'error';
       }
     } else {
-      return null;
+      return 'error';
     }
   },
 
