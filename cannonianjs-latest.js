@@ -205,20 +205,46 @@ cannonianjs.prototype = {
     }
   },
 
-  toCan : function(p) {
-    if(!p) p = this.canno;
-    return this.helper.toDigits(p.hour,2) + '.' + 
-      this.helper.toDigits(p.minu,2) + '.' + 
-      this.helper.toDigits(p.cent,2) + '.' + 
-      this.helper.toDigits(p.mill,2) + '.' + 
-      this.helper.toDigits(p.micr,3);
+  toCan : function(p,show) {
+    if(!p) var p = this.canno;
+    if(typeof show === 'undefined' || (typeof show !== 'undefined' && (show < 0 || show > 5))) var show = 5;
+    var run = '';
+
+    if(show >= 1) {
+      run = run + this.helper.toDigits(p.hour,2);
+      if(show >= 2) {
+        run = run + '.' + this.helper.toDigits(p.minu,2);
+        if(show >= 3) {
+          run = run + '.' + this.helper.toDigits(p.cent,2);
+          if(show >= 4) {
+            run = run + '.' + this.helper.toDigits(p.mill,2);
+            if(show >= 5) {
+              run = run + '.' + this.helper.toDigits(p.micr,3);
+            }
+          }
+        }
+      }
+    }
+
+    return run;
   },
 
-  toSta : function(p) { //converts JSON object to string
-    if(!p) p = this.stand;
-    return this.helper.toDigits(p.hour,2) + ':' + 
-      this.helper.toDigits(p.minu,2) + ':' + 
-      this.helper.toDigits(p.seco,2);
+  toSta : function(p, show) { //converts JSON object to string
+    if(!p) var p = this.stand;
+    if(typeof show === 'undefined' || (typeof show !== 'undefined' && (show < 0 || show > 3))) var show = 3;
+    var run = '';
+
+    if(show >= 1) {
+      run = run + this.helper.toDigits(p.hour,2);
+      if(show >= 2) {
+        run = run + ':' + this.helper.toDigits(p.minu,2);
+        if(show >= 3) {
+          run = run + ':' + this.helper.toDigits(p.seco,2);
+        }
+      }
+    }
+
+    return run;
   },
 
   toDec : function(p) {
