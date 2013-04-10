@@ -131,7 +131,7 @@ cannonianjs.prototype = {
     } else if (p <= 1 && p >= 0) {
       return 'dec';
     } else if (typeof p == 'string') {
-      if (/^([0-9]{2,3}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{3})$/.test(p)) {
+      if (/^([0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{3})$/.test(p)) {
         return 'cannonianstring';
       } else if (/^([0-9]{2}:[0-9]{2}:[0-9]{2}:[0-9]{2})$/.test(p)) {
         return 'standardstring';
@@ -254,7 +254,6 @@ cannonianjs.prototype = {
     } else {
       var use = p.canno;
     }
-    if (use.hour > 99) return 1;
     var dec = '0.' + 
         this.helper.toDigits(use.hour,2) + '' + 
         this.helper.toDigits(use.minu,1) + '' + 
