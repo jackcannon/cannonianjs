@@ -8,15 +8,18 @@ Cannonianjs API
 
 ###In Node.js
 Install using:
+
 	npm install cannonian
 
 Include using:
+
 	var cannonianjs = require('cannonian');
 
 ##Usage
 
 ###Types
 There are several types that cannonianjs deals with:
+
 * 'date' - date objects (e.g. new Date())
 * 'datestring' - e.g. "Sat Jan 01 2000 00:00:00 GMT+0000 (GMT Standard Time)"
 * 'standardstring' - e.g. '23:59:59:999'
