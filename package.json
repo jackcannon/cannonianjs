@@ -1,0 +1,28 @@
+{
+  "name": "CannonianJS",
+  "description": "Metric time converter",
+  "keywords": [
+    "metric time",
+    "metric",
+    "time",
+    "cannon",
+    "cannonian",
+    "converter"
+  ],
+  "version": "0.0.3",
+  "dependencies": {
+    "antr": "*"
+  },
+  "devDependencies": {},
+  "author": "Jack Cannon <jackc@annon.co.uk>",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jackcannon/cannonianjs.git"
+  },
+  "engines": {
+    "node": ">= 0.8.9"
+  },
+  "scripts": {
+    "test": "node test/node/run.js"
+  }
+}

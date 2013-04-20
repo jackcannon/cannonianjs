@@ -1,8 +1,5 @@
-SHELL = /bin/bash
-DIST_DIR = $(shell echo "`pwd`/dist")
-
-test: \
+test: 
+	node test/node/run.js
 
 .PHONY: \
-	test \
-	run
+	test

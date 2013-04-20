@@ -1,5 +1,15 @@
-cannonianjs API
+Cannonianjs API
 ===========
+
+##Install
+
+###In Browser
+	<script type="text/javascript" src="https://raw.github.com/jackcannon/cannonianjs/master/cannonianjs-latest.js"></script>
+
+###In Node.js
+	npm install cannonian
+
+##Usage
 
 ###Types
 There are several types that cannonianjs deals with:
@@ -13,13 +23,13 @@ There are several types that cannonianjs deals with:
 
 ###Functions
 * .conv(p, fromType, toType) - converts between types
-** p - optional. parameter to convert. if not given, will use the cannonian object that the function is being called from.
-** fromType - optional. type of object currently. if not given, type will be calculated.
-** toType - optional. type you wish to convert to. if not given, will return cannonianjs object.
+  p - optional. parameter to convert. if not given, will use the cannonian object that the function is being called from.
+  fromType - optional. type of object currently. if not given, type will be calculated.
+  toType - optional. type you wish to convert to. if not given, will return cannonianjs object.
 
 * .getType(p) - returns the type of the given parameter.
-** p - optional. parameter. if not given, will use the cannonian object that the function is being called from.
+  p - optional. parameter. if not given, will use the cannonian object that the function is being called from.
 
 * .parse(type, p) - translates object into cannonianjs object style format
-** type - required. type of the parameter given
-** p - parameter to convert
+  type - required. type of the parameter given
+  p - parameter to convert
