@@ -10,10 +10,10 @@
     "converter"
   ],
   "version": "0.0.4",
-  "dependencies": {
-    "antr": "*"
+  "dependencies": {},
+  "devDependencies": {
+    "antr": "~0.1.3"
   },
-  "devDependencies": {},
   "author": "Jack Cannon <jackc@annon.co.uk>",
   "repository": {
     "type": "git",
@@ -23,6 +23,6 @@
     "node": ">= 0.8.9"
   },
   "scripts": {
-    "test": "node test/node/run.js"
+    "test": "node test/run.js"
   }
 }

@@ -1,5 +1,5 @@
 test: 
-	node test/node/run.js
+	node test/run.js
 
 .PHONY: \
 	test
