@@ -55,8 +55,7 @@ var Cannonian = (function () {
      *   micr: 999,
      *   minute: 9,
      *   centiminute: 99,
-     *   milliminute: 9,
-     *   microminute: 999
+     *   milliminute: 9
      * }
      */
 
@@ -70,7 +69,11 @@ var Cannonian = (function () {
 
   Cannonian.prototype = {
     set: function (p) {
-      if(helper.is.date(p)) { // is Date object
+      if(helper.is.cannonian(p)) { // is cannonian object
+        this.cann = helper.getCann.fromCannonian(p);
+        this.stan = helper.convert.cannToStan(this.cann);
+
+      } else if(helper.is.date(p)) { // is Date object
         this.stan = helper.getStan.fromDate(p);
         this.cann = helper.convert.stanToCann(this.stan);
 
@@ -84,7 +87,7 @@ var Cannonian = (function () {
       }
 
       Object.freeze(this.stan);
-      // Object.freeze(this.cann);
+      Object.freeze(this.cann);
     }
   };
 
@@ -95,6 +98,9 @@ var Cannonian = (function () {
 
   var helper = {
     is: {
+      cannonian: function (p) {
+        return p instanceof Cannonian && p.cann && p.stan;
+      },
       date: function (p) {
         return p instanceof Date && p.toString() !== 'Invalid Date';
       },
@@ -123,6 +129,14 @@ var Cannonian = (function () {
         return this.fromDate(d);
       }
     },
+    getCann: {
+      fromCannonian: function (p) {
+        return helper.fill.cann(p.cann);
+      },
+      fromDec: function (p) {
+        return; // TODO
+      }
+    },
     fill: { // will fill out missing properties
       stan: function (obj) {
         return {
@@ -141,29 +155,42 @@ var Cannonian = (function () {
           minu: obj.minu || obj.minute || 0,
           cent: obj.cent || obj.centiminute || 0,
           mill: obj.mill || obj.milliminute || 0,
-          micr: obj.micr || obj.microminute || 0,
           minute: obj.minu || obj.minute || 0,
           centiminute: obj.cent || obj.centiminute || 0,
-          milliminute: obj.mill || obj.milliminute || 0,
-          microminute: obj.micr || obj.microminute || 0
+          milliminute: obj.mill || obj.milliminute || 0
         };
       }
     },
     convert: {
       stanToCann: function (stan) {
-        var totalMilliseconds = (stan.hour * MS_HOU) + (stan.minu * MS_MIN) + (stan.seco * MS_SEC) + stan.mill;
-        console.log(totalMilliseconds);
+        var mill = (stan.hour * MS_HOU) + (stan.minu * MS_MIN) + (stan.seco * MS_SEC) + stan.mill; // total milliseconds
+        var decimal = mill / MS_DAY;
 
-        var cann = {
-
-        };
+        var cann = {};
+        cann.hour = Math.floor(decimal * 100);
+        cann.minu = Math.floor((decimal * 100 * 10) % cann.hour);
+        cann.cent = Math.floor((decimal * 100 * 10 * 100) % ((cann.hour * 10) + cann.minu));
+        cann.mill = Math.floor((decimal * 100 * 10 * 100 * 10 * 100) % 1000);
 
         return helper.fill.cann(cann);
+      },
+      cannToStan: function (cann) {
+        var decimal = (cann.hour / 100) + (cann.minu / 1000) + (cann.cent / 100000) + (cann.mill / 100000000);
+        var mill = Math.round(decimal * MS_DAY);
+
+        var r = mill;
+
+        var stan = {};
+        stan.hour = Math.floor(r / MS_HOU); r = (r % MS_HOU);
+        stan.minu = Math.floor(r / MS_MIN); r = (r % MS_MIN);
+        stan.seco = Math.floor(r / MS_SEC); r = (r % MS_SEC);
+        stan.mill = Math.floor(r);
+
+        return helper.fill.stan(stan);
       }
     }
   };
 
-  if(window) window.helper = helper;
 
   // Node.js
   if (typeof module !== 'undefined' && module.exports) {
@@ -171,6 +198,7 @@ var Cannonian = (function () {
   }
   // Browser
   else {
+    window.helper = helper;
     return Cannonian;
   }
 

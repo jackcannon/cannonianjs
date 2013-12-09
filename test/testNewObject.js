@@ -9,20 +9,18 @@ tests.testNewObjectWhenGivenNothing = function () {
   // has cannonian times object
   assert.ok(cann.cann, 'has property "cann"');
 
+  assert.ok(cann.cann.hour, 'has property "cann.hour"');
   assert.ok(cann.cann.minu, 'has property "cann.minu"');
   assert.ok(cann.cann.cent, 'has property "cann.cent"');
   assert.ok(cann.cann.mill, 'has property "cann.mill"');
-  assert.ok(cann.cann.micr, 'has property "cann.micr"');
 
   assert.ok(cann.cann.minute, 'has property "cann.minute"');
   assert.ok(cann.cann.centiminute, 'has property "cann.centiminute"');
   assert.ok(cann.cann.milliminute, 'has property "cann.milliminute"');
-  assert.ok(cann.cann.microminute, 'has property "cann.microminute"');
 
   assert.equal(cann.cann.minute, cann.cann.minu, '"cann.minute" is same as "cann.minu"');
   assert.equal(cann.cann.centiminute, cann.cann.cent, '"cann.centiminute" is same as "cann.cent"');
   assert.equal(cann.cann.milliminute, cann.cann.mill, '"cann.milliminute" is same as "cann.mill"');
-  assert.equal(cann.cann.microminute, cann.cann.micr, '"cann.microminute" is same as "cann.micr"');
 
 
   // has standard times object
@@ -33,12 +31,10 @@ tests.testNewObjectWhenGivenNothing = function () {
   assert.ok(cann.stan.seco, 'has property "stan.seco"');
   assert.ok(cann.stan.mill, 'has property "stan.mill"');
 
-  assert.ok(cann.stan.hour, 'has property "stan.hour"');
   assert.ok(cann.stan.minute, 'has property "stan.minute"');
   assert.ok(cann.stan.second, 'has property "stan.second"');
   assert.ok(cann.stan.millisecond, 'has property "stan.millisecond"');
 
-  assert.equal(cann.stan.hour, cann.stan.hour, '"stan.hour" is same as "stan.hour"');
   assert.equal(cann.stan.minute, cann.stan.minu, '"stan.minute" is same as "stan.minu"');
   assert.equal(cann.stan.second, cann.stan.seco, '"stan.second" is same as "stan.seco"');
   assert.equal(cann.stan.millisecond, cann.stan.mill, '"stan.millisecond" is same as "stan.mill"');
