@@ -2,21 +2,21 @@ Cannonian.js
 ===========
 ##Install
 ###In Browser
-    <script type="text/javascript" src="http://cannonti.me/cannonianjs.js"></script>
+		<script type="text/javascript" src="http://cannonti.me/cannonianjs.js"></script>
 
 ###In Node.js
 Install using:
 
-  npm install cannonian
+	npm install cannonian
 
 Include using:
 
-  var Cannonian = require('cannonian');
+	var Cannonian = require('cannonian');
 
 ##Usage
 ###Constructor
 
-    var cannonian = new Cannonian();
+		var cannonian = new Cannonian();
 
 The constructor has 3 parameters:
 
@@ -36,18 +36,18 @@ The constructor has 3 parameters:
 ###Public Functions
 ####toStan
 
-    var cannonian = new Cannonian('12:00');
-    cannonian.toStan(3); // '12:00:00'
+		var cannonian = new Cannonian('12:00');
+		cannonian.toStan(3); // '12:00:00'
 Returns the standard time in 24-hour string.
 
 ####toCann
 
-    var cannonian = new Cannonian('12:00');
-    cannonian.toCann(3); // '50.000'
+		var cannonian = new Cannonian('12:00');
+		cannonian.toCann(3); // '50.000'
 Returns the cannononian time in decimal-style string.
 
 ####ToDec
 
-    var cannonian = new Cannonian('12.345');
-    cannonian.toDec(5); // 0.12345
+		var cannonian = new Cannonian('12.345');
+		cannonian.toDec(5); // 0.12345
 Returns a decimal value equivalent to cannonian time.
