@@ -22,28 +22,38 @@ var checkSixFortyFive = function (cann) {
   assert.strictEqual(0.2813, cann.toDec(4));
   assert.strictEqual(0.28125, cann.toDec(5));
   assert.strictEqual(0.28125, cann.toDec());
-}
+};
 
 tests.fromDate = function () {
   var cann = new Cannonian('Tues Jan 1 2013 06:45:00 GMT+0000 (GMT)', 0);
   checkSixFortyFive(cann);
-}
+};
 
 tests.fromDateString = function () {
   var cann = new Cannonian('Tues Jan 1 2013 06:45:00 GMT+0000 (GMT)', 0);
   checkSixFortyFive(cann);
-}
+};
 
 tests.fromCannonianObject = function () {
   var param = new Cannonian('Tues Jan 1 2013 06:45:00 GMT+0000 (GMT)', 0);
   var cann = new Cannonian(param);
   checkSixFortyFive(cann);
-}
+};
 
 tests.fromDecimal = function () {
-  var cann = new Cannonian(0.28125);
+  var cann = new Cannonian(0.28125, 0);
   checkSixFortyFive(cann);
-}
+};
+
+tests.fromCannonianString = function () {
+  var cann = new Cannonian('28.125', 0);
+  checkSixFortyFive(cann);
+};
+
+tests.fromStandardString = function () {
+  var cann = new Cannonian('6:45:00', 0);
+  checkSixFortyFive(cann);
+};
 
 for(var t in tests) {
   tests[t]();

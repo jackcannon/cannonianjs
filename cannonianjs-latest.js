@@ -159,7 +159,7 @@ var Cannonian = (function () {
         return p && /^[0-9]{1,2}\.[0-9]{1,6}$/.test(p);
       },
       standardString: function (p) {
-        return p && /^([0-9]{2}:){1,3}([0-9]{2,3})?$/.test(p);
+        return p && /^([0-9]{1,2}:){1,3}([0-9]{2,3})?$/.test(p);
       },
       decimal: function (p) {
         return typeof p === 'number' && p >= 0 && p < 1;

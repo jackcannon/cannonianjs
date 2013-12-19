@@ -39,18 +39,18 @@ var testHasProperties = function (cann) {
 
   assert.equal('number', typeof cann.cannTimezone, 'has property "cannTimezone"');
   assert.equal('number', typeof cann.stanTimezone, 'has property "stanTimezone"');
-}
+};
 
 tests.testNewObjectWhenGivenNothing = function () {
   var cann = new Cannonian();
   testHasProperties(cann);
-}
+};
 
 tests.testNewObjectWhenGivenDateObject = function () {
   var date = new Date('Tues Jan 1 2013 06:45:00 GMT+0000 (GMT)');
   var cann = new Cannonian(date);
   testHasProperties(cann);
-}
+};
 
 for(var t in tests) {
   tests[t]();
