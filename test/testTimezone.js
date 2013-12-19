@@ -5,8 +5,11 @@ var tests = {};
 
 tests.testUTCCorrection = function () {
   var cann = new Cannonian('06:45:00', -10);
-  assert.strictEqual(cann.stan.hour, 16);
-  assert.strictEqual(cann.toStan(3), '6:45:00');
+  assert.strictEqual(cann.stan.hour, 16); // 6 + 10
+  assert.strictEqual(cann.toStan(1), '6'); // 16 - 10
+
+  assert.strictEqual(cann.cann.hour, 69);
+  assert.strictEqual(cann.toCann(1), '24'); // 69 - (9 * 5)
 };
 
 tests.testCannTZIsCorrect = function () {
