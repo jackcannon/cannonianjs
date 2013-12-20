@@ -48,19 +48,19 @@ Returns the standard time in 24-hour string.
 	cannonian.toCann(3); // '50.000'
 Returns the cannononian time in decimal-style string.
 
-####ToDec
+####toDec
 
 	var cannonian = new Cannonian('12.345');
 	cannonian.toDec(5); // 0.12345
 Returns a decimal value equivalent to cannonian time.
 
-####ToCannObject
+####toCannObject
 
 	var cannonian = new Cannonian('12.345');
 	cannonian.toCannObject(); // { hour: 12, minu: 3, cent: 45, mill: 0, minute: 3, centiminute: 45, milliminute: 0 }
 Returns a primitive object representation of Cannonian time.
 
-####ToStanObject
+####toStanObject
 
 	var cannonian = new Cannonian('12:30:45');
 	cannonian.toStanObject(); // { hour: 12, minu: 30, seco: 45, mill: 0, minute: 30, second: 45, millisecond: 0 }
