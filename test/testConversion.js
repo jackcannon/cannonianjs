@@ -4,24 +4,28 @@ var assert = require('assert');
 var tests = {};
 
 var checkSixFortyFive = function (cann) {
-  assert.strictEqual('6', cann.toStan(1));
-  assert.strictEqual('6:45', cann.toStan(2));
-  assert.strictEqual('6:45:00', cann.toStan(3));
-  assert.strictEqual('6:45:00:000', cann.toStan(4));
-  assert.strictEqual('6:45:00:000', cann.toStan());
 
-  assert.strictEqual('28', cann.toCann(1));
-  assert.strictEqual('28.1', cann.toCann(2));
-  assert.strictEqual('28.125', cann.toCann(3));
-  assert.strictEqual('28.125000', cann.toCann(4));
-  assert.strictEqual('28.125000', cann.toCann());
+  assert.strictEqual(cann.toStan(1), '6');
+  assert.strictEqual(cann.toStan(2), '6:45');
+  assert.strictEqual(cann.toStan(3), '6:45:00');
+  assert.strictEqual(cann.toStan(4), '6:45:00:000');
+  assert.strictEqual(cann.toStan(), '6:45:00:000');
 
-  assert.strictEqual(0.3, cann.toDec(1));
-  assert.strictEqual(0.28, cann.toDec(2));
-  assert.strictEqual(0.281, cann.toDec(3));
-  assert.strictEqual(0.2813, cann.toDec(4));
-  assert.strictEqual(0.28125, cann.toDec(5));
-  assert.strictEqual(0.28125, cann.toDec());
+  assert.strictEqual(cann.toCann(1), '28');
+  assert.strictEqual(cann.toCann(2), '28.1');
+  assert.strictEqual(cann.toCann(3), '28.125');
+  assert.strictEqual(cann.toCann(4), '28.125000');
+  assert.strictEqual(cann.toCann(), '28.125000');
+
+  assert.strictEqual(cann.toDec(1), 0.3);
+  assert.strictEqual(cann.toDec(2), 0.28);
+  assert.strictEqual(cann.toDec(3), 0.281);
+  assert.strictEqual(cann.toDec(4), 0.2813);
+  assert.strictEqual(cann.toDec(5), 0.28125);
+  assert.strictEqual(cann.toDec(), 0.28125);
+
+  assert.deepEqual(cann.toCannObject(), { hour: 28, minu: 1, cent: 25, mill: 0, minute: 1, centiminute: 25, milliminute: 0 });
+  assert.deepEqual(cann.toStanObject(), { hour: 6, minu: 45, seco: 0, mill: 0, minute: 45, second: 0, millisecond: 0 });
 };
 
 tests.fromDate = function () {
@@ -52,6 +56,26 @@ tests.fromCannonianString = function () {
 
 tests.fromStandardString = function () {
   var cann = new Cannonian('6:45:00', 0);
+  checkSixFortyFive(cann);
+};
+
+tests.fromCannObject = function () {
+  var obj = {
+    hour: 28,
+    minu: 1,
+    cent: 25
+  };
+  var cann = new Cannonian(obj, 0);
+  checkSixFortyFive(cann);
+};
+
+tests.fromStanObject = function () {
+  var obj = {
+    hour: 6,
+    minu: 45,
+    seco: 0
+  };
+  var cann = new Cannonian(obj, 0);
   checkSixFortyFive(cann);
 };
 

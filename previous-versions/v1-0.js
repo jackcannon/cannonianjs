@@ -1,7 +1,7 @@
 /**
  * Cannonian.js
  * Made by Jack Cannon - c.annon.co.uk
- * v1.1.0
+ * v1.0.0
  */
 
 
@@ -96,14 +96,6 @@ var Cannonian = (function () {
         this.stan = helper.takeTimezone.stan(helper.getStan.fromDatestring(p), this.stanTimezone);
         this.cann = helper.convert.stanToCann(this.stan);
 
-      } else if(helper.is.cannObject(p)) { // is Cannonian Object
-        this.cann = helper.takeTimezone.cann(helper.getCann.fromCannObject(p), this.cannTimezone);
-        this.stan = helper.convert.cannToStan(this.cann);
-        
-      } else if(helper.is.stanObject(p)) {
-        this.stan = helper.takeTimezone.stan(helper.getStan.fromStanObject(p), this.stanTimezone)
-        this.cann = helper.convert.stanToCann(this.stan);
-
       } else { // use now
         this.stan = helper.takeTimezone.stan(helper.getStan.fromDate(new Date()), this.stanTimezone);
         this.cann = helper.convert.stanToCann(this.stan);
@@ -150,12 +142,6 @@ var Cannonian = (function () {
       var withTZ = helper.applyTimezone.cann(this.cann, this.cannTimezone);
       var dec = (withTZ.hour / 100) + (withTZ.minu / 1000) + (withTZ.cent / 100000) + (withTZ.mill / 100000000);
       return (typeof places == 'number') ? parseFloat(dec.toFixed(places)) : parseFloat(dec.toFixed(8)) ;
-    },
-    toCannObject: function () {
-      return helper.applyTimezone.cann(this.cann, this.cannTimezone);
-    },
-    toStanObject: function () {
-      return helper.applyTimezone.stan(this.stan, this.stanTimezone);
     }
   };
 
@@ -188,12 +174,6 @@ var Cannonian = (function () {
       },
       decimal: function (p) {
         return typeof p === 'number' && p <= 100 && p >= 0;
-      },
-      cannObject: function (p) {
-        return typeof p === 'object' && typeof p.hour !== 'undefined' && (typeof p.cent !== 'undefined' || typeof p.centiminute !== 'undefined');
-      },
-      stanObject: function (p) {
-        return typeof p === 'object' && typeof p.hour !== 'undefined' && (typeof p.seco !== 'undefined' || typeof p.seco !== 'undefined');
       }
     },
     getStan: {
@@ -220,9 +200,6 @@ var Cannonian = (function () {
         stan.seco = parseInt(split[2] || 0, 10);
         stan.mill = parseInt(split[3] || 0, 10);
         return helper.fill.stan(stan);
-      },
-      fromStanObject: function (p) {
-        return helper.fill.stan(p);
       }
     },
     getCann: {
@@ -240,9 +217,6 @@ var Cannonian = (function () {
       },
       fromDecimal: function (p) {
         return helper.convert.stanToCann(null, p);
-      },
-      fromCannObject: function (p) {
-        return helper.fill.cann(p);
       }
     },
     fill: { // will fill in missing properties

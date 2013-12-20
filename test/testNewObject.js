@@ -52,6 +52,26 @@ tests.testNewObjectWhenGivenDateObject = function () {
   testHasProperties(cann);
 };
 
+tests.testNewObjectWhenGivenCannObject = function () {
+  var obj = {
+    hour: 1,
+    minu: 2,
+    cent: 3
+  };
+  var cann = new Cannonian(obj, 0);
+  testHasProperties(cann);
+};
+
+tests.testNewObjectWhenGivenStanObject = function () {
+  var obj = {
+    hour: 1,
+    minu: 2,
+    seco: 3
+  };
+  var cann = new Cannonian(obj, 0);
+  testHasProperties(cann);
+};
+
 for(var t in tests) {
   tests[t]();
 }
