@@ -9,7 +9,7 @@
     "cannonian",
     "converter"
   ],
-  "version": "1.1.0",
+  "version": "1.1.1",
   "dependencies": {},
   "devDependencies": {
     "antr": "~0.1.3"

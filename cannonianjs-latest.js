@@ -1,7 +1,7 @@
 /**
  * Cannonian.js
  * Made by Jack Cannon - c.annon.co.uk
- * v1.1.0
+ * v1.1.1
  */
 
 

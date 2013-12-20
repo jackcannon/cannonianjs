@@ -2,7 +2,7 @@ Cannonian.js
 ===========
 ##Install
 ###In Browser
-	<script type="text/javascript" src="http://cannonti.me/cannonianjs.js"></script>
+	<script type="text/javascript" src="http://cannonianti.me/cannonian.js"></script>
 
 ###In Node.js
 Install using:
@@ -30,8 +30,10 @@ The constructor has 3 parameters:
 * Date objects - e.g. new Date()
 * Date strings - e.g. 'Tues Jan 1 2013 06:45:00 GMT+0000 (GMT)'
 * Decimals - e.g. 0.5
-* Standard time strings - '12:45:30'
-* Cannonian time strings - '53.125'
+* Standard time strings - e.g. '12:45:30'
+* Cannonian time strings - e.g. '53.125'
+* Cannonian time primitive objects - e.g. { hour: 50, minute: 3, centiminute: 50 }
+* Standard time primitive objects - e.g. { hour: 12, minute: 30, second: 30 }
 
 ###Public Functions
 ####toStan
@@ -51,3 +53,15 @@ Returns the cannononian time in decimal-style string.
 	var cannonian = new Cannonian('12.345');
 	cannonian.toDec(5); // 0.12345
 Returns a decimal value equivalent to cannonian time.
+
+####ToCannObject
+
+	var cannonian = new Cannonian('12.345');
+	cannonian.toCannObject(); // { hour: 12, minu: 3, cent: 45, mill: 0, minute: 3, centiminute: 45, milliminute: 0 }
+Returns a primitive object representation of Cannonian time.
+
+####ToStanObject
+
+	var cannonian = new Cannonian('12:30:45');
+	cannonian.toCannObject(); // { hour: 12, minu: 30, seco: 45, mill: 0, minute: 30, second: 45, millisecond: 0 }
+Returns a primitive object representation of Cannonian time.
