@@ -63,5 +63,5 @@ Returns a primitive object representation of Cannonian time.
 ####ToStanObject
 
 	var cannonian = new Cannonian('12:30:45');
-	cannonian.toCannObject(); // { hour: 12, minu: 30, seco: 45, mill: 0, minute: 30, second: 45, millisecond: 0 }
-Returns a primitive object representation of Cannonian time.
+	cannonian.toStanObject(); // { hour: 12, minu: 30, seco: 45, mill: 0, minute: 30, second: 45, millisecond: 0 }
+Returns a primitive object representation of Standard time.
