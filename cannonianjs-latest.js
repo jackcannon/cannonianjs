@@ -11,8 +11,8 @@ var Cannonian = (function () {
    */
   var MS_DAY = ((1000 * 60) * 60) * 24; // milliseconds in a day
   var MS_HOU = (1000 * 60) * 60; // milliseconds in an hour
-  var MS_MIN = 1000 * 60; // milliseconds in a day
-  var MS_SEC = 1000; // milliseconds in a day
+  var MS_MIN = 1000 * 60; // milliseconds in a minute
+  var MS_SEC = 1000; // milliseconds in a second
 
 
   /**
@@ -379,7 +379,6 @@ var Cannonian = (function () {
   }
   // Browser
   else {
-    window.helper = helper; // TODO: Remove this line!
     return Cannonian;
   }
 
