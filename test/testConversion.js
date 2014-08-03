@@ -40,7 +40,7 @@ tests.fromDateString = function () {
 
 tests.fromCannonianObject = function () {
   var param = new Cannonian('Tues Jan 1 2013 06:45:00 GMT+0000 (GMT)', 0);
-  var cann = new Cannonian(param);
+  var cann = new Cannonian(param, 0);
   checkSixFortyFive(cann);
 };
 

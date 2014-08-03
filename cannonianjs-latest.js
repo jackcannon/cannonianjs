@@ -1,7 +1,7 @@
 /**
  * Cannonian.js
  * Made by Jack Cannon - c.annon.co.uk
- * v1.1.2
+ * v1.1.3
  */
 
 
@@ -280,8 +280,8 @@ var Cannonian = (function () {
 
         var cann = {};
         cann.hour = Math.floor(decimal * 100);
-        cann.minu = (cann.hour === 0) ? Math.floor((decimal * 100 * 10)) : Math.floor((decimal * 100 * 10) % cann.hour);
-        cann.cent = (cann.hour + cann.minu === 0) ? Math.floor((decimal * 100 * 10 * 100)) : Math.floor((decimal * 100 * 10 * 100) % ((cann.hour * 10) + cann.minu));
+        cann.minu = Math.floor((decimal * 100 * 10) % 10);
+        cann.cent = Math.floor((decimal * 100 * 10 * 100) % 100);
         cann.mill = Math.floor((decimal * 100 * 10 * 100 * 10 * 100) % 1000);
 
         return helper.fill.cann(cann);
